@@ -3,13 +3,15 @@ SEPARATOR = '/'
 MODIFICATION_FIELD = 'etag'
 FILENAME_FIELD = 'name'
 IS_DIR_FIELD = 'is_directory'
+SIZE_FIELD = 'size'
 
 
 class File(object):
 
-    def __init__(self, path, modification_stamp=''):
+    def __init__(self, path, modification_stamp='', size=0):
         self.path = path
         self.modification_stamp = modification_stamp
+        self.size = size
 
 
 class FileTree(File):
@@ -36,12 +38,13 @@ class FileTree(File):
         files = {}
         for r in resources:
             name = r[FILENAME_FIELD]
+            size = r[SIZE_FIELD]
             modification_stamp = r[MODIFICATION_FIELD]
             path = self._full_path(name)
             if r[IS_DIR_FIELD]:
                 directories[name] = FileTree(self.dav, path, modification_stamp)
             else:
-                files[name] = File(path, modification_stamp)
+                files[name] = File(path, modification_stamp, size)
         return directories, files
 
     def all_files(self):
@@ -54,8 +57,7 @@ class FileTree(File):
 
     # new - old
     def diff(self, old_file_tree):
-        new_files = [files for files in self.files if files not in old_file_tree.files]
-        removed_files = [files for files in old_file_tree.files if files not in self.files]
+        new_files, modified_files, removed_files = categorize_files(self.files, old_file_tree.files)
 
         own_directories = self.directories.keys()
         old_directories = old_file_tree.directories.keys()
@@ -91,6 +93,20 @@ def categorize_directories(new_directory_list, old_directory_list):
             new.append(directory)
 
     return new, still_existing, removed
+
+
+def categorize_files(updated, old_files):
+    new = []
+    modified = []
+    removed = [old_files[file].path for file in old_files if file not in updated]
+    for file in updated:
+        if file in old_files:
+            if updated[file].size != old_files[file].size:
+                modified.append(updated[file].path)
+        else:
+            new.append(updated[file].path)
+
+    return new, modified, removed
 
 
 def flatten_nested(list):
