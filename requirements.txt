@@ -1,0 +1,4 @@
+pycurl>=7.43.0
+m2crypto==0.24.0
+git+https://gitlab.cern.ch/fts/fts-rest.git
+git+https://github.com/wochinge/webdav-client-python/tree/develop
