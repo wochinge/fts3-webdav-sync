@@ -73,9 +73,13 @@ class FileTree(File):
         removed_files.extend(files_of_removed_directories)
 
         # Check subdirs for new files if directory has existed before
-        nested_new_files = [files for d in still_existing_directories for files in self.directories[d].diff(old_file_tree.directories[d])]
-        new_files.extend(nested_new_files)
-        return new_files
+        for existing in still_existing_directories:
+            new_sub_files, modified_sub_files, removed_sub_files =  self.directories[existing].diff(old_file_tree.directories[existing])
+            new_files.extend(new_sub_files)
+            modified_files.extend(modified_sub_files)
+            removed_files.extend(removed_sub_files)
+
+        return new_files, modified_files, removed_files
 
     def _full_path(self, sub):
         return '{}{}'.format(self.path, sub)
