@@ -30,7 +30,6 @@ def main():
     # print(file_tree.all_files())
     # start = time()
     sleep(10)
-    file_tree.update()
     # print(time() - start)
     print(file_tree.all_files())
 

@@ -44,44 +44,6 @@ class FileTree(File):
                 files[name] = File(path, modification_stamp)
         return directories, files
 
-    def update(self, updated_modification_stamp=''):
-        if not updated_modification_stamp:
-            updated_modification_stamp = self.dav.info(self.path)[MODIFICATION_FIELD]
-
-        if self.modification_stamp != updated_modification_stamp:
-            updated_resources = self.dav.enhanced_list(self.path)
-            directories, files = self._parse_response(updated_resources)
-
-            self._update_files(files)
-            self._update_directories(directories)
-
-        else:
-            for _, subtree in self.directories.items():
-                subtree.update()
-
-    def _update_files(self, new_files):
-        for f in new_files:
-            if f not in self.files:
-                self.files[f] = new_files[f]
-            elif self.files[f].modification_stamp != new_files[f].modification_stamp:
-                self.files[f] = new_files[f]
-
-        removed_files = [file for file in self.files if file not in new_files]
-        for file in removed_files:
-            del self.files[file]
-
-    def _update_directories(self, updated_directory_list):
-        removed_directories = [directory for directory in self.directories if directory not in updated_directory_list]
-        for directory in removed_directories:
-            del self.directories[directory]
-
-        for d in updated_directory_list:
-            if d not in self.directories:
-                self.directories[d] = updated_directory_list[d]
-                self.directories[d].populate()
-            else:
-                self.directories[d].update(updated_directory_list[d].modification_stamp)
-
     def all_files(self):
         all_files = [self.files[file].path for file in self.files]
 
