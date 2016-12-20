@@ -1,0 +1,50 @@
+type: map
+mapping:
+  Essential settings:
+    type: map
+    required: True
+    mapping:
+      fts3 REST endpoint:
+        required: True
+        type: str
+      source endpoint:
+        required: True
+        type: str
+      destination endpoint:
+        required: True
+        type: str
+
+  SSL settings:
+    type: map
+    required: True
+    mapping:
+      path of user certificate:
+        required: True
+        type: str
+      path of user key:
+        required: True
+        type: str
+      verify host:
+        type: bool
+
+  DAV settings:
+    type: map
+    mapping:
+      verbose:
+        type: bool
+
+  Synchronization settings:
+    type: map
+    mapping:
+      action for modified file:
+        type: str
+        enum: ['ignore', 'overwrite', 'keep_both']
+
+  Logging:
+    type: map
+    mapping:
+      log level:
+        type: str
+        enum: ['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL']
+      path of logging file:
+        type: str

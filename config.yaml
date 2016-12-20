@@ -1,0 +1,22 @@
+---
+Essential settings:
+    fts3 REST endpoint: 'https://fts.coursework.htw:8446/'
+    source endpoint: 'https://webdav1.coursework.htw/'
+    destination endpoint: 'https://webdav2.coursework.htw/'
+
+SSL settings:
+    path of user certificate: '/coursework/certs/client.crt'
+    path of user key: '/coursework/certs/client.key'
+    verify host: False
+
+Synchronization settings:
+    action for modified file: 'ignore'
+
+DAV settings:
+    verbose: False
+
+Logging:
+    log level: 'DEBUG'
+    # path of logging file:
+...
+
