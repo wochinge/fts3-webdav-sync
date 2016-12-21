@@ -8,11 +8,11 @@ from configuration.configuration import read_configuration_file
 
 def start_synchronizing(configuration_file_path):
     configuration = read_configuration_file(configuration_file_path)
-    source_client = wc.Client(configuration.dav_source_options)
+    source_client = wc.Client(configuration.dav.source_options)
     source_tree = tree.FileTree(source_client, 'webdav/')
     source_tree.populate()
 
-    destination_client = wc.Client(configuration.dav_destination_options)
+    destination_client = wc.Client(configuration.dav.destination_options)
     destination_tree = tree.FileTree(destination_client, 'webdav/')
     destination_tree.populate()
 
@@ -36,3 +36,14 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# Todo:
+# Neue Strategie:
+# 1. Run: Populate Sync
+# 2. Run:
+#     - Source: Populate und vergleich mit altem Tree --> New, Modified, Deleted -> aber wieder als tree
+#     - Destination: Populate
+#     - Vergleich Source-Changes mit Destination
+#     - Sync
+#
+#     Note: Dann waere es auch moeglich zwischen Synce alles neu und synce nur aenderungen moeglich zu machen

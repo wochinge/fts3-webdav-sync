@@ -4,7 +4,7 @@ from pykwalify.core import Core as YamlValidator
 import logging
 from ssl_settings import SSLSetting
 from synchronization_settings import SynchronizationSetting
-
+from dav_settings import DAVSetting
 import warnings
 warnings.simplefilter('ignore', yaml.error.UnsafeLoaderWarning)
 
@@ -23,7 +23,8 @@ class Configuration(object):
         self.ssl_settings = SSLSetting(configuration_as_map['SSL settings'])
         self.dav_source_options = {}
         self.dav_destination_options = {}
-        self._init_dav_config(configuration_as_map)
+        self.dav = DAVSetting(self.source_url, self.destination_url,
+                              self.ssl_settings, configuration_as_map.get('DAV settings', {}))
 
         log_config = configuration_as_map.get('Logging', None)
         if log_config:
@@ -32,25 +33,6 @@ class Configuration(object):
         synchronization_config = configuration_as_map.get('Synchronization settings', None)
         if synchronization_config:
             self.sync_settings = SynchronizationSetting(synchronization_config)
-
-    def _init_dav_config(self, configuration):
-        common = {
-            'ssl_verify_peer': self.ssl_settings.verify_host,
-            'ssl_verify_host': self.ssl_settings.verify_host,
-            'cert_path': self.ssl_settings.certificate_path,
-            'key_path': self.ssl_settings.key_path,
-            'verbose': configuration.get('DAV settings', {}).get('verbose', False)
-        }
-        self.dav_source_options = {
-            'webdav_hostname': self.source_url
-        }
-
-        self.dav_destination_options = {
-            'webdav_hostname': self.destination_url
-        }
-
-        self.dav_source_options.update(common)
-        self.dav_destination_options.update(common)
 
     def _init_logging(self, logging_config):
         level = logging_config.get('log level', logging.DEBUG)
