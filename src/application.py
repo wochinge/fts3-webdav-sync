@@ -3,7 +3,7 @@ from fts import FTS
 import file_tree as tree
 from time import time, sleep
 import argparse
-from configuration import read_configuration_file
+from configuration.configuration import read_configuration_file
 
 
 def start_synchronizing(configuration_file_path):

@@ -2,6 +2,8 @@ import ruamel.yaml as yaml
 import os.path
 from pykwalify.core import Core as YamlValidator
 import logging
+from ssl_settings import SSLSetting
+from synchronization_settings import SynchronizationSetting
 
 import warnings
 warnings.simplefilter('ignore', yaml.error.UnsafeLoaderWarning)
@@ -27,6 +29,10 @@ class Configuration(object):
         if log_config:
             self._init_logging(log_config)
 
+        synchronization_config = configuration_as_map.get('Synchronization settings', None)
+        if synchronization_config:
+            self.sync_settings = SynchronizationSetting(synchronization_config)
+
     def _init_dav_config(self, configuration):
         common = {
             'ssl_verify_peer': self.ssl_settings.verify_host,
@@ -50,14 +56,6 @@ class Configuration(object):
         level = logging_config.get('log level', logging.DEBUG)
         path = logging_config.get('Logging', {}).get('path of logging file', None)
         logging.basicConfig(level=level, filename=path)
-
-
-class SSLSetting(object):
-
-    def __init__(self, configuration):
-        self.verify_host = configuration.get('verify host', True)
-        self.certificate_path = configuration['path of user certificate']
-        self.key_path = configuration['path of user key']
 
 
 def read_configuration_file(path):
