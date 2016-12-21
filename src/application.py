@@ -16,11 +16,11 @@ def start_synchronizing(configuration_file_path):
     destination_tree = tree.FileTree(destination_client, 'webdav/')
     destination_tree.populate()
 
-    new, modified, removed = destination_tree.diff(source_tree)
+    file_diff = source_tree.diff(destination_tree)
     #print(new)
-    print(modified)
+    print(file_diff)
     fts = FTS(configuration)
-    fts.submit(new)
+    fts.submit(file_diff)
 
 
 def main():
