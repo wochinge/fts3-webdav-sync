@@ -1,5 +1,5 @@
 import webdav.client as wc
-from fts import FTS
+from fts.fts import FTS
 import file_tree.directory as tree
 from time import time, sleep
 import argparse
