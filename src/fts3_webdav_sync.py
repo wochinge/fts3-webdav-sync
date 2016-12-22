@@ -43,23 +43,3 @@ def main():
 if __name__ == "__main__":
     main()
 
-# Todo:
-# Neue Strategie:
-# 1. Run: Populate Sync
-# 2. Run:
-#     - Source: Populate und vergleich mit altem Tree --> New, Modified, Deleted -> aber wieder als tree
-#     - Destination: Populate
-#     - Vergleich Source-Changes mit Destination
-#     - Sync
-#
-#     Note: Dann waere es auch moeglich zwischen Synce alles neu und synce nur aenderungen moeglich zu machen
-
-# TODO 2:
-# FileTree -> Directory
-# File mit neuer Eigenschaft: isRemoved
-
-# Todo 3:
-# Timeintervall fuer Sync mit aufnehmen
-
-# TODO 4:
-# Exclude
