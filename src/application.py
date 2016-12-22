@@ -1,6 +1,6 @@
 import webdav.client as wc
 from fts import FTS
-import file_tree as tree
+import file_tree.directory as tree
 from time import time, sleep
 import argparse
 from configuration.configuration import read_configuration_file
@@ -9,16 +9,22 @@ from configuration.configuration import read_configuration_file
 def start_synchronizing(configuration_file_path):
     configuration = read_configuration_file(configuration_file_path)
     source_client = wc.Client(configuration.dav.source_options)
-    source_tree = tree.FileTree(source_client, 'webdav/')
+    source_tree = tree.Directory(source_client, 'webdav/')
     source_tree.populate()
 
     destination_client = wc.Client(configuration.dav.destination_options)
-    destination_tree = tree.FileTree(destination_client, 'webdav/')
+    destination_tree = tree.Directory(destination_client, 'webdav/')
     destination_tree.populate()
 
-    file_diff = source_tree.diff(destination_tree)
-    #print(new)
-    print(file_diff)
+    file_diff = source_tree.diff_tree(destination_tree)
+    print('NEW')
+    print(file_diff.new_files())
+
+    print('Modified')
+    print(file_diff.modified_files())
+
+    print('Removed')
+    print(file_diff.removed_files())
     fts = FTS(configuration)
     fts.submit(file_diff)
 

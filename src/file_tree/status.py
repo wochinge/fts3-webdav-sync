@@ -1,0 +1,5 @@
+
+EMPTY = 0
+NEW = 1
+MODIFIED = 2
+REMOVED = 3
