@@ -53,3 +53,13 @@ if __name__ == "__main__":
 #     - Sync
 #
 #     Note: Dann waere es auch moeglich zwischen Synce alles neu und synce nur aenderungen moeglich zu machen
+
+# TODO 2:
+# FileTree -> Directory
+# File mit neuer Eigenschaft: isRemoved
+
+# Todo 3:
+# Timeintervall fuer Sync mit aufnehmen
+
+# TODO 4:
+# Exclude
