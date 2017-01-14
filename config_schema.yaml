@@ -39,6 +39,8 @@ mapping:
   Synchronization settings:
     type: map
     mapping:
+       sync interval in minutes:
+        type: int
       action for modified file:
         type: str
         enum: ['ignore', 'overwrite', 'keep_both']

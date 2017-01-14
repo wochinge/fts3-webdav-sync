@@ -12,6 +12,7 @@ SSL settings:
 
 Synchronization settings:
     action for modified file: 'ignore'
+    sync interval in minutes: 1
 
 DAV settings:
     verbose: False
