@@ -1,7 +1,7 @@
 
 from file import File
 import status
-from utils.path_util import name_with_timestamp
+from fts_sync.utils.path_util import name_with_timestamp
 
 MODIFICATION_TIMESTAMP_FIELD = 'modified'
 ETAG_FIELD = 'etag'

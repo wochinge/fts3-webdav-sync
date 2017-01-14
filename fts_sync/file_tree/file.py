@@ -1,6 +1,7 @@
 
 import status
 
+
 class File(object):
 
     def __init__(self, path, modification_time=0, etag='', size=0):

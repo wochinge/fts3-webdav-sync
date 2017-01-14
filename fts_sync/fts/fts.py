@@ -1,6 +1,6 @@
 import fts3.rest.client.easy as fts3
-import configuration.synchronization_settings as SyncStrategy
-from utils.path_util import path_with_timestamp, absolute_path
+import fts_sync.configuration.synchronization_settings as SyncStrategy
+from fts_sync.utils.path_util import path_with_timestamp, absolute_path
 import logging
 
 logger = logging.getLogger('fts')
