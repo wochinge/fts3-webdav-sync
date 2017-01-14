@@ -21,3 +21,7 @@ def _with_timestamp(text, file_object):
 
 def name_with_timestamp(name, file_object):
     return _with_timestamp(name, file_object)
+
+
+def absolute_path(*path_elements):
+    return ''.join(path_elements)

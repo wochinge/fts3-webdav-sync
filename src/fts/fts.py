@@ -1,6 +1,6 @@
 import fts3.rest.client.easy as fts3
 import configuration.synchronization_settings as SyncStrategy
-from utils.path_util import path_with_timestamp
+from utils.path_util import path_with_timestamp, absolute_path
 import logging
 
 logger = logging.getLogger('fts')
@@ -30,8 +30,8 @@ class FTS(object):
         return fts3.submit(self.context, job)
 
     def _create_transfer(self, file):
-        absolute_source = '{}{}'.format(self.source, file.path)
-        absolute_destination = '{}{}'.format(self.destination, file.path)
+        absolute_source = absolute_path(self.source, file.path)
+        absolute_destination = absolute_path(self.destination, file.path)
         return fts3.new_transfer(absolute_source, absolute_destination)
 
     def _create_transfers_for_modified(self, modified_file):
