@@ -36,16 +36,14 @@ mapping:
   Synchronization settings:
     type: map
     mapping:
-       sync interval in minutes:
-        type: int
+      sync interval in minutes:
+        type: number
       action for modified file:
         type: str
         enum: ['ignore', 'overwrite', 'keep_both']
       dry run:
-        required: False
         type: bool
       single run:
-        required: False
         type: bool
 
 
