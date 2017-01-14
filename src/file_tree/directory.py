@@ -1,6 +1,7 @@
 
 from file import File
 import status
+from utils.path_util import name_with_timestamp
 
 MODIFICATION_TIMESTAMP_FIELD = 'modified'
 ETAG_FIELD = 'etag'
@@ -106,7 +107,7 @@ def _categorize(new_files, old_files):
     for file_key in new_files:
         file = new_files[file_key]
         if file_key in old_files:
-            if file.is_modified(old_files[file_key]):
+            if file.is_modified(old_files[file_key]) and name_with_timestamp(file_key, file) not in old_files:
                 file.status = status.MODIFIED # does not matter for directories
                 modified.append(file_key)
                 all_changed[file_key] = file
