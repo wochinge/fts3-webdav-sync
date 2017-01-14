@@ -44,6 +44,10 @@ mapping:
       dry run:
         required: False
         type: bool
+      single run:
+        required: False
+        type: bool
+
 
   Logging:
     type: map

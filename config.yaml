@@ -13,6 +13,8 @@ Synchronization settings:
     action for modified file: 'ignore'
     sync interval in minutes: 1
     dry run: True
+    single run: False
+
 
 DAV settings:
     verbose: False
