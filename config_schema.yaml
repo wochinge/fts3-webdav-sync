@@ -13,6 +13,9 @@ mapping:
       destination endpoint:
         required: True
         type: str
+      dry run:
+        required: False
+        type: bool
 
   SSL settings:
     type: map

@@ -25,8 +25,10 @@ def start_synchronizing(configuration_file_path):
 
     print('Removed')
     print(file_diff.removed_files())
-    fts = FTS(configuration)
-    fts.submit(file_diff)
+
+    if not configuration.dry_run:
+        fts = FTS(configuration)
+        fts.submit(file_diff)
 
 
 def main():

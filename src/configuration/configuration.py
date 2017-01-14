@@ -10,6 +10,7 @@ warnings.simplefilter('ignore', yaml.error.UnsafeLoaderWarning)
 
 READ_MODE = 'r'
 
+ESSENTIAL = 'Essential settings'
 
 class Configuration(object):
 
@@ -17,9 +18,10 @@ class Configuration(object):
     required_ssl_keys = ['Path of user certificate', 'Path of user key']
 
     def __init__(self, configuration_as_map):
-        self.fts_url = configuration_as_map['Essential settings']['fts3 REST endpoint']
-        self.source_url = configuration_as_map['Essential settings']['source endpoint']
-        self.destination_url = configuration_as_map['Essential settings']['destination endpoint']
+        self.fts_url = configuration_as_map[ESSENTIAL]['fts3 REST endpoint']
+        self.source_url = configuration_as_map[ESSENTIAL]['source endpoint']
+        self.destination_url = configuration_as_map[ESSENTIAL]['destination endpoint']
+        self.dry_run = configuration_as_map[ESSENTIAL].get('dry run', False)
         self.ssl_settings = SSLSetting(configuration_as_map['SSL settings'])
         self.dav_source_options = {}
         self.dav_destination_options = {}
