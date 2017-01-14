@@ -21,7 +21,7 @@ class FTS(object):
 
         transfers_for_new_file = map(self._create_transfer, file_differences.new_files())
         transfers_for_modified = []
-        if self.strategy != SyncStrategy.IGNORE_MODIFIED and len(file_differences.modified) > 0:
+        if self.strategy != SyncStrategy.IGNORE_MODIFIED and len(file_differences.modified_files()) > 0:
             transfers_for_modified = map(self._create_transfers_for_modified, file_differences.modified_files())
 
         all_transfers = transfers_for_new_file + transfers_for_modified
