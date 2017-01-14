@@ -12,6 +12,7 @@ READ_MODE = 'r'
 
 ESSENTIAL = 'Essential settings'
 
+
 class Configuration(object):
 
     required_keys = ['Essential Settings', 'SSL settings']
@@ -21,7 +22,7 @@ class Configuration(object):
         self.fts_url = configuration_as_map[ESSENTIAL]['fts3 REST endpoint']
         self.source_url = configuration_as_map[ESSENTIAL]['source endpoint']
         self.destination_url = configuration_as_map[ESSENTIAL]['destination endpoint']
-        self.dry_run = configuration_as_map[ESSENTIAL].get('dry run', False)
+
         self.ssl_settings = SSLSetting(configuration_as_map['SSL settings'])
         self.dav_source_options = {}
         self.dav_destination_options = {}

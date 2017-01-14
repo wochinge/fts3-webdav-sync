@@ -3,7 +3,6 @@ Essential settings:
     fts3 REST endpoint: 'https://fts.coursework.htw:8446/'
     source endpoint: 'https://webdav1.coursework.htw/'
     destination endpoint: 'https://webdav2.coursework.htw/'
-    dry run: False
 
 SSL settings:
     path of user certificate: '/coursework/certs/client.crt'
@@ -13,6 +12,7 @@ SSL settings:
 Synchronization settings:
     action for modified file: 'ignore'
     sync interval in minutes: 1
+    dry run: True
 
 DAV settings:
     verbose: False

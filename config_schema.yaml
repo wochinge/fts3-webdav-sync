@@ -13,9 +13,6 @@ mapping:
       destination endpoint:
         required: True
         type: str
-      dry run:
-        required: False
-        type: bool
 
   SSL settings:
     type: map
@@ -44,6 +41,9 @@ mapping:
       action for modified file:
         type: str
         enum: ['ignore', 'overwrite', 'keep_both']
+      dry run:
+        required: False
+        type: bool
 
   Logging:
     type: map
