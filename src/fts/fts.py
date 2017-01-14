@@ -17,6 +17,7 @@ class FTS(object):
 
     def submit(self, file_differences):
         if len(file_differences) < 1 or (len(file_differences.new_files()) < 1 and self.strategy == SyncStrategy.IGNORE_MODIFIED):
+            logger.info('No changes to synchronize')
             return
 
         transfers_for_new_file = map(self._create_transfer, file_differences.new_files())
