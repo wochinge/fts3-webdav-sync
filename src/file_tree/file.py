@@ -17,4 +17,4 @@ class File(object):
         return str(self)
 
     def is_modified(self, same_file_from_old_sync):
-        return self.size != same_file_from_old_sync.size
+        return self.modification_time != same_file_from_old_sync.modification_time
