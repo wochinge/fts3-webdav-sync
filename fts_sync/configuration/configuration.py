@@ -47,7 +47,7 @@ def read_configuration_file(path):
     if not os.path.isfile(path):
         raise IOError('Log file was not found at this path: {}'.format(path))
 
-    validator = YamlValidator(source_file=path, schema_files=['../config_schema.yaml'])
+    validator = YamlValidator(source_file=path, schema_files=['config_schema.yaml'])
     validator.validate(raise_exception=True)
     with open(path, READ_MODE) as configuration_file:
         configuration = yaml.load(configuration_file)
