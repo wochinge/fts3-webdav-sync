@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 import fts3.rest.client.easy as fts3
 import fts_sync.configuration.synchronization_settings as SyncStrategy
 from fts_sync.utils.path_util import path_with_timestamp, absolute_path

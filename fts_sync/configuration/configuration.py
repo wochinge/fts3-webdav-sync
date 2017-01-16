@@ -1,10 +1,11 @@
+from __future__ import absolute_import
 import ruamel.yaml as yaml
 import os.path
 from pykwalify.core import Core as YamlValidator
 import logging
-from ssl_settings import SSLSetting
-from synchronization_settings import SynchronizationSetting
-from dav_settings import DAVSetting
+from fts_sync.configuration.ssl_settings import SSLSetting
+from fts_sync.configuration.synchronization_settings import SynchronizationSetting
+from fts_sync.configuration.dav_settings import DAVSetting
 import warnings
 warnings.simplefilter('ignore', yaml.error.UnsafeLoaderWarning)
 
