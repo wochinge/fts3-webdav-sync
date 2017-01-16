@@ -1,8 +1,10 @@
+from __future__ import absolute_import
 import webdav.client as wc
-from fts.fts import FTS
-import file_tree.directory as tree
+from fts_sync.fts.fts import FTS
+import fts_sync.file_tree.directory as tree
+from fts_sync.file_tree.diff_tree import DiffedTree
 from time import time, sleep
-from configuration.configuration import read_configuration_file
+from fts_sync.configuration.configuration import read_configuration_file
 import logging
 
 logger = logging.getLogger('fts')
@@ -23,7 +25,7 @@ class SynchronizationRunner(object):
             source_tree = self._populate_file_tree(configuration.dav.source_options, 'webdav/')
             destination_tree = self._populate_file_tree(configuration.dav.destination_options, 'webdav/')
             logger.debug('Comparing the contents')
-            file_diff = source_tree.diff_tree(destination_tree)
+            file_diff = DiffedTree(destination_tree, source_tree)
 
             logger.info('New files:\n{}'.format(file_diff.new_files()))
             logger.info('Modified files:\n{}'.format(file_diff.modified_files()))
