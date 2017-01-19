@@ -1,4 +1,5 @@
 import logging
+from re import split as split_with_regex
 
 logger = logging.getLogger('utils.path_util')
 
@@ -37,3 +38,15 @@ def name_with_timestamp(name, file_object):
 
 def absolute_path(*path_elements):
     return ''.join(path_elements)
+
+
+def split_in_url_and_directory(url):
+    if not url.endswith('/'):
+        url += '/'
+    pattern = r'(http[s]?:\/\/.+?[^\/]\/)'
+    result = split_with_regex(pattern, url)
+    if len(result) != 3:
+        raise ValueError("The url you provided is not valid.", url)
+    return result[1], result[2]
+
+

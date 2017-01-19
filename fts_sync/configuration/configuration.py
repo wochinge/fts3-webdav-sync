@@ -6,6 +6,8 @@ import logging
 from fts_sync.configuration.ssl_settings import SSLSetting
 from fts_sync.configuration.synchronization_settings import SynchronizationSetting
 from fts_sync.configuration.dav_settings import DAVSetting
+from fts_sync.utils.path_util import split_in_url_and_directory
+
 import warnings
 warnings.simplefilter('ignore', yaml.error.UnsafeLoaderWarning)
 
@@ -21,13 +23,16 @@ class Configuration(object):
 
     def __init__(self, configuration_as_map):
         self.fts_url = configuration_as_map[ESSENTIAL]['fts3 REST endpoint']
-        self.source_url = configuration_as_map[ESSENTIAL]['source endpoint']
-        self.destination_url = configuration_as_map[ESSENTIAL]['destination endpoint']
+
+        source_url = configuration_as_map[ESSENTIAL]['source endpoint']
+        self.source_url, source_start_directory = split_in_url_and_directory(source_url)
+
+        destination_url = configuration_as_map[ESSENTIAL]['destination endpoint']
+        self.destination_url, destination_start_directory = split_in_url_and_directory(destination_url)
 
         self.ssl_settings = SSLSetting(configuration_as_map['SSL settings'])
-        self.dav_source_options = {}
-        self.dav_destination_options = {}
-        self.dav = DAVSetting(self.source_url, self.destination_url,
+        self.dav = DAVSetting(self.source_url, source_start_directory,
+                              self.destination_url, destination_start_directory,
                               self.ssl_settings, configuration_as_map.get('DAV settings', {}))
 
         log_config = configuration_as_map.get('Logging', None)

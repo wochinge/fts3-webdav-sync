@@ -1,8 +1,8 @@
 ---
 Essential settings:
     fts3 REST endpoint: 'https://fts.coursework.htw:8446/'
-    source endpoint: 'https://webdav1.coursework.htw/'
-    destination endpoint: 'https://webdav2.coursework.htw/'
+    source endpoint: 'https://webdav1.coursework.htw/webdav/'
+    destination endpoint: 'https://webdav2.coursework.htw/webdav'
 
 SSL settings:
     path of user certificate: '/coursework/certs/client.crt'
