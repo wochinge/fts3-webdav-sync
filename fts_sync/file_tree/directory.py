@@ -1,6 +1,7 @@
 from __future__ import absolute_import
 from fts_sync.file_tree.file import File
 import fts_sync.file_tree.status as status
+from fts_sync.utils.path_util import remove_excluded
 
 MODIFICATION_TIMESTAMP_FIELD = 'modified'
 ETAG_FIELD = 'etag'
@@ -29,14 +30,16 @@ class Directory(File):
         copy.directories = self.directories
         return copy
 
-    def populate(self):
+    def populate(self, excluded_patterns=None):
         if not self.etag:
             root, resources_in_current_directory = self.dav.enhanced_list(self.path, include_root=True)
             self.modification_time = root[MODIFICATION_TIMESTAMP_FIELD]
             self.etag = root[ETAG_FIELD]
         else:
             resources_in_current_directory = self.dav.enhanced_list(self.path)
-        self.directories, self.files = self._parse_response(resources_in_current_directory)
+
+        result = self._parse_response(resources_in_current_directory)
+        self.directories, self.files = [remove_excluded(items, excluded_patterns) for items in result]
 
         for _, subtree in self.directories.items():
             subtree.populate()

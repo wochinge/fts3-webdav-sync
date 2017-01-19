@@ -54,5 +54,5 @@ class SynchronizationRunner(object):
     def _populate_file_tree(self, dav_config, start_directory=''):
         client = wc.Client(dav_config)
         file_tree = tree.Directory(client, start_directory)
-        file_tree.populate()
+        file_tree.populate(self.configuration.sync_settings.excluded)
         return file_tree

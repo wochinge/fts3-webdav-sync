@@ -11,6 +11,15 @@ class File(object):
         self.size = size
         self.status = file_status
 
+    def __eq__(self, other):
+        return (isinstance(other, self.__class__)
+                and self.path == other.path
+                and self.modification_time == other.modification_time
+                and self.etag == other.etag
+                and self.size == other.size
+                and self.status == other.status
+                )
+
     def __str__(self):
         return self.path
 

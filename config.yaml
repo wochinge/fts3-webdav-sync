@@ -14,7 +14,8 @@ Synchronization settings:
     sync interval in minutes: 1
     dry run: True
     single run: False
-
+    exclude:
+      - '*.DS_Store'
 
 DAV settings:
     verbose: False

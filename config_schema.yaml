@@ -45,6 +45,10 @@ mapping:
         type: bool
       single run:
         type: bool
+      exclude:
+        type: seq
+        sequence:
+          - type: str
 
 
   Logging:

@@ -1,5 +1,6 @@
 import logging
 from re import split as split_with_regex
+from fnmatch import fnmatch
 
 logger = logging.getLogger('utils.path_util')
 
@@ -49,4 +50,14 @@ def split_in_url_and_directory(url):
         raise ValueError("The url you provided is not valid.", url)
     return result[1], result[2]
 
+
+def remove_excluded(files, patterns):
+    if not patterns:
+        return files
+    return {name: file for name, file in files.iteritems() if _file_not_matches_patterns(file, patterns)}
+
+
+def _file_not_matches_patterns(file, patterns):
+    match_results = map(lambda pattern: fnmatch(file.path, pattern), patterns)
+    return not any(match_results)
 

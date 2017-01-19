@@ -10,3 +10,4 @@ class SynchronizationSetting(object):
         self.interval = config.get('sync interval in minutes', 30) * 60
         self.dry_run = config.get('dry run', False)
         self.single_run = config.get('single run', False)
+        self.excluded = config.get('exclude', [])
