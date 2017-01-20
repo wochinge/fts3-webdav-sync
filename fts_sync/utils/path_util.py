@@ -37,8 +37,9 @@ def name_with_timestamp(name, file_object):
     return _with_timestamp(name, file_object)
 
 
-def absolute_path(*path_elements):
-    return ''.join(path_elements)
+def absolute_url(*path_elements):
+    concatenated = ''.join(path_elements)
+    return concatenated.replace(' ', '%20')
 
 
 def split_in_url_and_directory(url):

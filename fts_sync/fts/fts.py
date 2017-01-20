@@ -1,7 +1,7 @@
 from __future__ import absolute_import
 import fts3.rest.client.easy as fts3
 import fts_sync.configuration.synchronization_settings as SyncStrategy
-from fts_sync.utils.path_util import path_with_timestamp, absolute_path
+from fts_sync.utils.path_util import path_with_timestamp, absolute_url
 import logging
 
 logger = logging.getLogger('fts')
@@ -35,16 +35,16 @@ class FTS(object):
         return fts3.submit(self.context, job)
 
     def _create_transfer(self, file):
-        absolute_source = absolute_path(self.source, file.path)
-        absolute_destination = absolute_path(self.destination, file.path)
+        absolute_source = absolute_url(self.source, file.path)
+        absolute_destination = absolute_url(self.destination, file.path)
         return fts3.new_transfer(absolute_source, absolute_destination)
 
     def _create_transfers_for_modified(self, modified_file):
         if self.strategy == SyncStrategy.OVERWRITE_MODIFIED:
             return self._create_transfer(modified_file)
         elif self.strategy == SyncStrategy.KEEP_BOTH:
-            absolute_source = '{}{}'.format(self.source, modified_file.path)
-            absolute_destination = '{}{}'.format(self.destination, path_with_timestamp(modified_file))
+            absolute_source = absolute_url(self.source, modified_file.path)
+            absolute_destination = absolute_url(self.destination, path_with_timestamp(modified_file))
             return fts3.new_transfer(absolute_source, absolute_destination)
         else:
             logging.error('Unknown strategy for modified files: {}'.format(self.strategy))
