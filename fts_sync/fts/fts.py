@@ -20,7 +20,7 @@ class FTS(object):
 
         new_files = file_differences.new_files()
         modified_files = file_differences.modified_files()
-        total_changes = len(new_files) + (0 if SyncStrategy.IGNORE_MODIFIED else len(modified_files))
+        total_changes = len(new_files) + (0 if self.strategy == SyncStrategy.IGNORE_MODIFIED else len(modified_files))
         if total_changes < 1:
             logger.info('No changes to synchronize')
             return
