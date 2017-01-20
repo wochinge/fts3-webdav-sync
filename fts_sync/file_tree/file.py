@@ -27,7 +27,8 @@ class File(object):
         return str(self)
 
     def is_modified(self, same_file_from_old_sync):
-        return self.modification_time != same_file_from_old_sync.modification_time
+        # do not use modification time / etag as synced files always have a different modification time
+        return self.size != same_file_from_old_sync.size
 
     def copy(self, new_status=status.EMPTY):
         return File(self.path, self.modification_time, self.etag, self.size, new_status)
