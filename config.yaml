@@ -12,7 +12,7 @@ SSL settings:
 Synchronization settings:
     action for modified file: 'ignore'
     sync interval in minutes: 1
-    dry run: True
+    dry run: False
     single run: False
     exclude:
       - '*.DS_Store'
@@ -22,6 +22,6 @@ DAV settings:
 
 Logging:
     log level: 'DEBUG'
-    # path of logging file:
+    # path of logging file: '/fts.log'
 ...
 

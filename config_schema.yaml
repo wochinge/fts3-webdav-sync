@@ -50,7 +50,6 @@ mapping:
         sequence:
           - type: str
 
-
   Logging:
     type: map
     mapping:
