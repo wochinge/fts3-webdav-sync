@@ -3,18 +3,42 @@
 Project to synchronize a source webdav to a destination webdav using fts3.
 
 ## Requirements
-*   easy_install
 *   Python 2.7
+*   Pip
+*   System libraries
+    +   GCC
+    +   curl-dev
+    +   musl-dev
+    +   libxml2-dev
+    +   libxslt-dev
+    +   git
+*   Running fts3 instance with installed rest-interface
+    +   fts3: <http://fts3-docs.web.cern.ch/fts3-docs/>
+    +   Installation guide for the rest interface: <http://fts3-docs.web.cern.ch/fts3-docs/fts-rest/docs/install.html>
 
 ## Execution
 
-1. Please adapt the config.yaml to fit your needs
-   You can find more information regarding the possible parameters in the wiki of this repository.
-
-2. Run the programm
+1.  Please adapt the config.yaml to fit your needs
+    The possible parameters are described below.
+    The minimal needed settings are:
+    -   ``Essential settings``
+        +   ``fts3 REST endpoint``
+        +   ``source endpoint``
+        +   ``destination endpoint``
+    -   ``SSL settings``
+        +   ``path of user certificate``
+        +   ``path of user key``
+2.  Install the needed dependencies:
+    ```bash
+    cd <cloned directory>
+    # Avoids the following conflict:
+    # 'pycurl: libcurl link-time ssl backend (xxx) is different from compile-time ssl backend (yyy) conflict
+    export PYCURL_SSL_LIBRARY=openssl
+    pip install -r requirements.txt
+    ```
+3.  Run the program
     ```bash
     python main.py --config <path to your config.yaml>
-
     ```
 
 ## Configuration parameters
@@ -54,7 +78,7 @@ Since FTS requires SSL the specification of ssl settings is needed.
     -   Allows you to skip the verification of the host certificates
     -   Useful if you have deal with self signed certificates
     -   Possible values:
-        +   ``True``: host is verfied (default)
+        +   ``True``: host is verified (default)
         +   ``False``: host is not verified
 
 ### Synchronization settings

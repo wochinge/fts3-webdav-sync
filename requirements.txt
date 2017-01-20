@@ -1,6 +1,6 @@
 pycurl>=7.43.0
 m2crypto
-https://github.com/wochinge/webdav-client-python/tarball/develop#egg=webdavclient
-https://gitlab.cern.ch/fts/fts-rest/repository/archive.tar.gz?ref=master#egg=fts3_rest
+git+https://github.com/wochinge/webdav-client-python.git@develop
+git+https://gitlab.cern.ch/fts/fts-rest.git
 pykwalify
 ruamel.yaml
