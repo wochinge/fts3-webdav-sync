@@ -45,7 +45,7 @@ class Configuration(object):
 
     def _init_logging(self, logging_config):
         level = logging_config.get('log level', logging.DEBUG)
-        path = logging_config.get('Logging', {}).get('path of logging file', None)
+        path = logging_config.get('path of logging file', None)
         logging.basicConfig(level=level, filename=path)
 
 
