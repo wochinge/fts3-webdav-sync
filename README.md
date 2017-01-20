@@ -29,6 +29,7 @@ Project to synchronize a source webdav to a destination webdav using fts3.
         +   ``path of user certificate``
         +   ``path of user key``
 2.  Install the needed dependencies:
+
     ```bash
     cd <cloned directory>
     # Avoids the following conflict:
@@ -36,7 +37,9 @@ Project to synchronize a source webdav to a destination webdav using fts3.
     export PYCURL_SSL_LIBRARY=openssl
     pip install -r requirements.txt
     ```
+
 3.  Run the program
+
     ```bash
     python main.py --config <path to your config.yaml>
     ```
@@ -46,7 +49,10 @@ Project to synchronize a source webdav to a destination webdav using fts3.
 ### Essential settings
 These are the core settings which have to be provided to run the synchronization:
 
-*   ``fts3 REST endpoint``: URL of the rest endpoint of your fts3 instance
+*   ``fts3 REST endpoint``:
+    -   URL of the rest endpoint of your fts3 instance
+    -   Example values:
+        ``'https://my.fts.instance.com:8446/'``
 *   ``source endpoint``:
     -   URL of the webdav server which provides the data which should be synchronized to a target files.
        New or modified files are synchronized.
