@@ -3,11 +3,10 @@ import unittest
 from fts_sync.file_tree.directory import Directory
 from fts_sync.file_tree.file import File
 from fts_sync.file_tree.diff_tree import DiffedTree
-import fts_sync.file_tree.status as status
 
 
-def _create_tree(files, dirs, dir_status=status.EMPTY):
-    directory = Directory(None, 'test', directory_status=dir_status)
+def _create_tree(files, dirs):
+    directory = Directory(None, 'test')
     directory.files = files
     directory.directories = dirs
     return directory
@@ -62,7 +61,7 @@ class DiffTreeTest(unittest.TestCase):
 
     def test_new_file_in_subdir(self):
         test_files = _files('sub/', [('index.html', '123')])
-        sub_tree = _create_tree(test_files, {}, status.NEW)
+        sub_tree = _create_tree(test_files, {})
 
         root_tree = _create_tree([], {'sub/': sub_tree})
 

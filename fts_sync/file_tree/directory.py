@@ -1,6 +1,5 @@
 from __future__ import absolute_import
 from fts_sync.file_tree.file import File
-import fts_sync.file_tree.status as status
 from fts_sync.utils.path_util import remove_excluded
 
 ETAG_FIELD = 'etag'
@@ -11,8 +10,8 @@ SIZE_FIELD = 'size'
 
 class Directory(File):
 
-    def __init__(self, dav, path, etag='', directory_status=status.EMPTY):
-        super(Directory, self).__init__(path, etag, file_status=directory_status)
+    def __init__(self, dav, path, etag=''):
+        super(Directory, self).__init__(path, etag)
         self.files = {}
         self.directories = {}
         self.dav = dav
@@ -22,12 +21,6 @@ class Directory(File):
 
     def is_modified(self, same_file_from_old_sync):
         return True
-
-    def copy(self, file_status=status.EMPTY):
-        copy = Directory(self.dav, self.path, self.etag, file_status)
-        copy.files = self.files
-        copy.directories = self.directories
-        return copy
 
     def populate(self, excluded_patterns=None):
         if not self.etag:
