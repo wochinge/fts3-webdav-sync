@@ -4,9 +4,8 @@ import fts_sync.file_tree.status as status
 
 class File(object):
 
-    def __init__(self, path, modification_time=0, etag='', size=0, file_status=status.EMPTY):
+    def __init__(self, path, etag='', size=0, file_status=status.EMPTY):
         self.path = path
-        self.modification_time = modification_time
         self.etag = etag
         self.size = size
         self.status = file_status
@@ -14,7 +13,6 @@ class File(object):
     def __eq__(self, other):
         return (isinstance(other, self.__class__)
                 and self.path == other.path
-                and self.modification_time == other.modification_time
                 and self.etag == other.etag
                 and self.size == other.size
                 and self.status == other.status
@@ -31,4 +29,4 @@ class File(object):
         return self.size != same_file_from_old_sync.size
 
     def copy(self, new_status=status.EMPTY):
-        return File(self.path, self.modification_time, self.etag, self.size, new_status)
+        return File(self.path, self.etag, self.size, new_status)

@@ -9,7 +9,6 @@ def _file(name, modification, is_dir=False):
         tree.FILENAME_FIELD: name,
         tree.IS_DIR_FIELD: is_dir,
         tree.SIZE_FIELD: 100,
-        tree.MODIFICATION_TIMESTAMP_FIELD: modification,
         tree.ETAG_FIELD: modification
     }
 

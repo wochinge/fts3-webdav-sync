@@ -3,7 +3,6 @@ from fts_sync.file_tree.file import File
 import fts_sync.file_tree.status as status
 from fts_sync.utils.path_util import remove_excluded
 
-MODIFICATION_TIMESTAMP_FIELD = 'modified'
 ETAG_FIELD = 'etag'
 FILENAME_FIELD = 'name'
 IS_DIR_FIELD = 'is_directory'
@@ -12,8 +11,8 @@ SIZE_FIELD = 'size'
 
 class Directory(File):
 
-    def __init__(self, dav, path, modification_time=0, etag='', directory_status=status.EMPTY):
-        super(Directory, self).__init__(path, modification_time, etag, file_status=directory_status)
+    def __init__(self, dav, path, etag='', directory_status=status.EMPTY):
+        super(Directory, self).__init__(path, etag, file_status=directory_status)
         self.files = {}
         self.directories = {}
         self.dav = dav
@@ -25,7 +24,7 @@ class Directory(File):
         return True
 
     def copy(self, file_status=status.EMPTY):
-        copy = Directory(self.dav, self.path, self.modification_time, self.etag, file_status)
+        copy = Directory(self.dav, self.path, self.etag, file_status)
         copy.files = self.files
         copy.directories = self.directories
         return copy
@@ -33,7 +32,6 @@ class Directory(File):
     def populate(self, excluded_patterns=None):
         if not self.etag:
             root, resources_in_current_directory = self.dav.enhanced_list(self.path, include_root=True)
-            self.modification_time = root[MODIFICATION_TIMESTAMP_FIELD]
             self.etag = root[ETAG_FIELD]
         else:
             resources_in_current_directory = self.dav.enhanced_list(self.path)
@@ -51,12 +49,11 @@ class Directory(File):
             name = r[FILENAME_FIELD]
             size = r[SIZE_FIELD]
             etag = r[ETAG_FIELD]
-            modification_stamp = r[MODIFICATION_TIMESTAMP_FIELD]
             path = self._full_path(name)
             if r[IS_DIR_FIELD]:
-                directories[name] = Directory(self.dav, path, modification_stamp, etag)
+                directories[name] = Directory(self.dav, path, etag)
             else:
-                files[name] = File(path, modification_stamp, etag, size)
+                files[name] = File(path, etag, size)
         return directories, files
 
     def all_files(self):
