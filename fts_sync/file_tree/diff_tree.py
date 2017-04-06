@@ -8,7 +8,7 @@ from fts_sync.utils.path_util import name_with_timestamp
 class DiffedTree(Directory):
 
     def __init__(self, old_tree=None, new_tree=None, directory_status=status.MODIFIED):
-        super(DiffedTree, self).__init__(new_tree.dav, new_tree.path, new_tree.etag)
+        super(DiffedTree, self).__init__(new_tree.path, new_tree.etag)
         self.status = directory_status
         if old_tree is None and new_tree is not None:
             self.directories = new_tree.directories

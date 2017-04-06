@@ -1,7 +1,6 @@
 from __future__ import absolute_import
-import webdav.client as wc
+from fts_sync.dav.dav_client import DavClient
 from fts_sync.fts.fts import FTS
-import fts_sync.file_tree.directory as tree
 from fts_sync.file_tree.diff_tree import DiffedTree
 from time import time, sleep
 from fts_sync.configuration.configuration import read_configuration_file
@@ -23,13 +22,14 @@ class SynchronizationRunner(object):
 
             logger.info('Start Synchronization')
             logger.debug('Getting the contents')
-            source_tree = self._populate_file_tree(self.configuration.dav.source_options,
+            source_tree = self._populate_file_tree(self.configuration.source_url,
+                                                   self.configuration.dav,
                                                    self.configuration.dav.source_start_directory)
-            destination_tree = self._populate_file_tree(self.configuration.dav.destination_options,
+            destination_tree = self._populate_file_tree(self.configuration.destination_url,
+                                                        self.configuration.dav,
                                                         self.configuration.dav.destination_start_directory)
             logger.debug('Comparing the contents')
             file_diff = DiffedTree(destination_tree, source_tree)
-
             logger.info('New files:\n{}'.format(file_diff.new_files()))
             logger.info('Modified files:\n{}'.format(file_diff.modified_files()))
 
@@ -51,8 +51,6 @@ class SynchronizationRunner(object):
     def _get_configuration(self):
         return read_configuration_file(self.configuration_file_path)
 
-    def _populate_file_tree(self, dav_config, start_directory=''):
-        client = wc.Client(dav_config)
-        file_tree = tree.Directory(client, start_directory)
-        file_tree.populate(self.configuration.sync_settings.excluded)
-        return file_tree
+    def _populate_file_tree(self, host, dav_config, start_directory=''):
+        client = DavClient(host, dav_config)
+        return client.list(start_directory)
