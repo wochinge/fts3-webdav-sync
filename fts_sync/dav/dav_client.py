@@ -17,10 +17,14 @@ class DavClient(object):
         self.curl.setopt(pycurl.SSL_VERIFYPEER, dav_settings.verify_host)
         self.curl.setopt(pycurl.FOLLOWLOCATION, True)
 
-    def list(self, path, parent_directory=None):
+    def list(self, queue, path, parent_directory=None):
         if parent_directory is None:
             parent_directory = Directory(path=path, etag='')
 
+        populated_directory = self.__list(path, parent_directory)
+        queue.put(populated_directory)
+
+    def __list(self, path, parent_directory):
         # Prepare curl
         header = ['Accept: */*', 'Depth: 1']
         url = '{}{}'.format(self.host_url, path)
@@ -32,7 +36,7 @@ class DavClient(object):
         # Parse response
         parent_directory.directories, parent_directory.files = parse_response(response)
         for subdirectory in parent_directory.directories.values():
-            self.list(path=subdirectory.path, parent_directory=subdirectory)
+            self.__list(path=subdirectory.path, parent_directory=subdirectory)
 
         return parent_directory
 
