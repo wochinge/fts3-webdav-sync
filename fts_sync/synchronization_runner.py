@@ -23,9 +23,12 @@ class SynchronizationRunner(object):
             start_time = time()
 
             self.configuration = self.__get_configuration()
-
+            next = time()
             source_tree, destination_tree = self.__index_dav_servers()
+            print(time() - next)
+            next = time()
             file_diff = self.__calculate_delta(source_tree, destination_tree)
+            print(time() - next)
 
             if not self.configuration.sync_settings.dry_run:
                 fts = FTS(self.configuration)

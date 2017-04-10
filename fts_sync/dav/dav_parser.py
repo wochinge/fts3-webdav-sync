@@ -19,7 +19,7 @@ def parse_response(dav_response):
     directories = {}
 
     logger.debug(dav_response)
-    tree = etree.fromstring(dav_response)
+    tree = etree.fromstring(dav_response.encode('utf-8'))
     file_infos = tree.findall('.//{DAV:}response')
 
     # exclude directory itself

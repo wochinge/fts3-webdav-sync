@@ -1,4 +1,5 @@
 pycurl>=7.43.0
+grequests
 m2crypto
 git+https://gitlab.cern.ch/fts/fts-rest.git
 pykwalify
