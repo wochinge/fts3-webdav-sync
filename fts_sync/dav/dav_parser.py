@@ -1,6 +1,8 @@
 import lxml.etree as etree
+
 from fts_sync.file_tree.file import File
 from fts_sync.file_tree.directory import Directory
+from fts_sync.utils.string_util import remove_quotes
 
 import logging
 
@@ -33,7 +35,7 @@ def __parse_file(file_info, files, directories):
     file_path = file_info.findtext(path_key)
     file_name = __filename(file_path)
     file_size = file_info.findtext(size_key)
-    file_etag = file_info.findtext(etag_key)
+    file_etag = remove_quotes(file_info.findtext(etag_key))
 
     if __is_directory(file_info):
         directories[file_name] = Directory(path=file_path, etag=file_etag)
