@@ -50,16 +50,14 @@ class SynchronizationRunner(object):
     def __index_dav_servers(self):
         logger.debug('Getting the contents')
         source_tree_queue = self.__populate_file_tree(self.configuration.source_url,
-                                                      self.configuration.dav,
                                                       self.configuration.dav.source_start_directory)
         destination_tree_queue = self.__populate_file_tree(self.configuration.destination_url,
-                                                           self.configuration.dav,
                                                            self.configuration.dav.destination_start_directory)
 
         return source_tree_queue.get(), destination_tree_queue.get()
 
-    def __populate_file_tree(self, host, dav_config, start_directory=''):
-        client = DavClient(host, dav_config)
+    def __populate_file_tree(self, host, start_directory=''):
+        client = DavClient(host, self.configuration.dav, self.configuration.sync_settings.excluded)
         queue = Queue()
         process = Process(target=client.list, args=(queue, start_directory))
         process.start()
